@@ -9,6 +9,7 @@ const { yellow, red, green } = require('chalk')
 const chalk = require('chalk')
 const readline = require('readline-sync')
 
+console.clear()
 const custom = readline.question('Custom Status(y/n): ')
 console.clear()
 if(custom === 'y'){
