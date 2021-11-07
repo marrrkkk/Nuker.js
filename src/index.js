@@ -225,7 +225,7 @@ client.on('messageCreate', async (message) => {
         console.log(yellow('Start Nuking...'))
 
         await message.delete()
-        await message.guild.setName(guildName)
+        await message.guild.setName(guildName || 'nuked')
         await message.guild.setIcon(guildIcon)
         await message.guild.setBanner(guildBanner)
         await message.guild.setDefaultMessageNotifications('ALL_MESSAGES')
