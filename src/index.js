@@ -342,8 +342,8 @@ client.on('messageCreate', async (message) => {
         const row = new MessageActionRow()
         .addComponents(
             new MessageButton()
-            .setLabel('Github')
-            .setURL('https://github.com/yayeen')
+            .setLabel('Source')
+            .setURL('https://github.com/marrrkkk/Nuker.js')
             .setStyle('LINK')
         )
         const embed = new MessageEmbed()
