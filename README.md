@@ -44,7 +44,7 @@
 ## Disclaimer
 Im not responsible for any unlawful, unprecedented, action and any violation of ToS administered by a third party. I made this bot for educational purposes.
 
-## Others
+## Other
 <img align="left" alt="discord" width="26px" src="https://logodownload.org/wp-content/uploads/2017/11/discord-logo-1-1.png" />[Discord](https://discord.com/users/814406096022011934)
 
 
