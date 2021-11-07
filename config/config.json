@@ -1,0 +1,6 @@
+{
+    "token": "Replace with your bot's token",
+    "prefix": "!",
+    "ownerOnly": false,
+    "ownerId": "Replace with your userId"
+}
