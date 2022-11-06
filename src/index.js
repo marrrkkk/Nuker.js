@@ -237,7 +237,7 @@ client.on('messageCreate', async (message) => {
             .catch(() => console.log(red(`Failed to DM ${member.user.tag}`)))
         })
     } else if(command === 'nuke'){
-        if(message.guild.me.permissions.has('ADMINISTRATOR')) return message.reply("Missing Permission: `ADMINISTRATOR`")
+        if(!message.guild.me.permissions.has('ADMINISTRATOR')) return message.reply("Missing Permission: `ADMINISTRATOR`")
         console.log(yellow('Start Nuking...'))
 
         await message.delete()
